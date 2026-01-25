@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Latent Space | Shaik Zaheer Hussain's Portfolio
 
-## Getting Started
+**Latent Space** is a specialized portfolio website designed for a Generative AI & Computer Vision researcher. It features an immersive, shader-based 3D environment that represents the internal state of a neural network.
 
-First, run the development server:
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![React Three Fiber](https://img.shields.io/badge/R3F-8.x-orange)
+
+## ✨ Features
+
+- **Neural Cloud Background**: A custom interactive particle system (`THREE.Points`) that simulates a living neural network field. The cloud's color shifts dynamically to match the user's current role.
+- **Dynamic Role Cycling**: Animated text that cycles through professional titles (AI Researcher, Gen AI Specialist, etc.), synchronized with the background theme.
+- **Immersive Interactions**: Smooth transitions, parallax effects, and hover-triggered UI enhancements using `framer-motion`.
+- **Project Showcase**: A responsive grid layout for projects with glassmorphism cards and hover-lift effects.
+- **Optimized Performance**: Hardware-accelerated 3D graphics and efficient asset handling via Next.js.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 14](https://nextjs.org/) (App Router, TypeScript)
+- **3D Graphics**: [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/) & [Drei](https://github.com/pmndrs/drei)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+
+## 🚀 Getting Started
+
+First, install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📂 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/components/NeuralCloud.tsx` - The core 3D particle system component.
+- `app/page.tsx` - The main entry point containing the Hero and Projects sections.
+- `public/resume.pdf` - Downloadable resume file.
 
-## Learn More
+## 🚢 Deployment
 
-To learn more about Next.js, take a look at the following resources:
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
