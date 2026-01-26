@@ -67,7 +67,7 @@ export default function Home() {
           >
             Home
           </button>
-          <a href="/resume.pdf" target="_blank" className="hover:text-white transition-colors">
+          <a href="/resume_zaheer.pdf" target="_blank" className="hover:text-white transition-colors">
             Resume
           </a>
         </div>
