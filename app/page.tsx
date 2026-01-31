@@ -1,16 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Canvas } from '@react-three/fiber'
 import NeuralCloud from './components/NeuralCloud'
-import { useEffect } from 'react'
 
 
 
 export default function Home() {
   const [view, setView] = useState<'hero' | 'projects'>('hero')
   const [textIndex, setTextIndex] = useState(0)
+  const projectsRef = useRef<HTMLElement>(null)
+  const touchStart = useRef<number | null>(null)
+  const isTransitioning = useRef(false)
 
   const titles = [
     "AI & Computer Vision Researcher",
@@ -31,20 +33,60 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [])
 
+  const lockTransition = () => {
+    isTransitioning.current = true
+    setTimeout(() => { isTransitioning.current = false }, 800)
+  }
+
+  // Scroll & Touch Logic
   const handleWheel = (e: React.WheelEvent) => {
-    // Threshold to prevent jitter
-    if (Math.abs(e.deltaY) < 30) return
+    if (isTransitioning.current) return
+    if (Math.abs(e.deltaY) < 40) return
 
     if (view === 'hero' && e.deltaY > 0) {
       setView('projects')
+      lockTransition()
     } else if (view === 'projects' && e.deltaY < 0) {
-      setView('hero')
+      // Only go back to hero if we are at the top of the projects list
+      if (projectsRef.current && projectsRef.current.scrollTop <= 0) {
+        setView('hero')
+        lockTransition()
+      }
     }
+  }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = e.touches[0].clientY
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart.current === null || isTransitioning.current) return
+
+    const touchEnd = e.changedTouches[0].clientY
+    const diff = touchStart.current - touchEnd
+
+    // Swipe Up (Go to Projects)
+    if (diff > 60 && view === 'hero') {
+      setView('projects')
+      lockTransition()
+    }
+
+    // Swipe Down (Go to Hero)
+    if (diff < -60 && view === 'projects') {
+      if (projectsRef.current && projectsRef.current.scrollTop <= 0) {
+        setView('hero')
+        lockTransition()
+      }
+    }
+
+    touchStart.current = null
   }
 
   return (
     <main
       onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className="relative h-screen w-screen overflow-hidden bg-[#0b0d10] text-white selection:bg-[#60a5fa] selection:text-white"
     >
 
@@ -102,7 +144,7 @@ export default function Home() {
         className="relative z-10 w-full h-full"
         initial={false}
         animate={{ y: view === 'hero' ? 0 : '-100%' }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }} // Slower, relaxed spring
+        transition={{ type: "spring", stiffness: 120, damping: 25, mass: 1 }}
       >
 
         {/* ===== HERO SECTION ===== */}
@@ -145,19 +187,28 @@ export default function Home() {
         </section>
 
         {/* ===== PROJECTS SECTION ===== */}
-        <section className="h-screen w-full px-8 md:px-20 py-32 overflow-hidden flex flex-col">
+        <section
+          ref={projectsRef}
+          className="h-screen w-full px-4 md:px-20 py-24 md:py-32 overflow-y-auto flex flex-col no-scrollbar"
+          onWheel={(e) => {
+            // Stop wheel propagation if we are scrolling inside the projects list
+            // This logic needs to be careful not to block the "return to hero" logic.
+            // Actually, parent handler captures bubble events.
+            // If we are in projects and scrollTop > 0, we want NATIVE scrolling, so we shouldn't trigger parent transition.
+            if (projectsRef.current && projectsRef.current.scrollTop > 0 && e.deltaY < 0) {
+              e.stopPropagation()
+            }
+          }}
+        >
+
+
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
             className="h-full w-full max-w-6xl mx-auto flex flex-col"
           >
-            <div className="flex items-center gap-4 mb-12">
-              <div className="h-[1px] w-12 bg-[#60a5fa]/50"></div>
-              <p className="text-xs font-bold tracking-[0.2em] text-[#60a5fa] uppercase">
-                My Work
-              </p>
-            </div>
+
 
             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 pb-6 min-h-0">
               {/* Project 1 */}
