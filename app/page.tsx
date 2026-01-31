@@ -31,8 +31,22 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [])
 
+  const handleWheel = (e: React.WheelEvent) => {
+    // Threshold to prevent jitter
+    if (Math.abs(e.deltaY) < 30) return
+
+    if (view === 'hero' && e.deltaY > 0) {
+      setView('projects')
+    } else if (view === 'projects' && e.deltaY < 0) {
+      setView('hero')
+    }
+  }
+
   return (
-    <main className="relative h-screen w-screen overflow-hidden bg-[#0b0d10] text-white selection:bg-[#60a5fa] selection:text-white">
+    <main
+      onWheel={handleWheel}
+      className="relative h-screen w-screen overflow-hidden bg-[#0b0d10] text-white selection:bg-[#60a5fa] selection:text-white"
+    >
 
       {/* ===== BACKGROUND: NEURAL CLOUD ===== */}
       <div className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ease-in-out ${view === 'projects' ? 'opacity-20' : 'opacity-100'}`}>
@@ -69,6 +83,16 @@ export default function Home() {
           </button>
           <a href="/resume_zaheer.pdf" target="_blank" className="hover:text-white transition-colors">
             Resume
+          </a>
+          <a
+            href="https://github.com/ZaheerH-03"
+            target="_blank"
+            className="hover:text-white transition-colors"
+            aria-label="GitHub Profile"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
           </a>
         </div>
       </header>
@@ -117,26 +141,7 @@ export default function Home() {
 
 
 
-          <motion.button
-            onClick={() => setView('projects')}
-            className="
-              absolute bottom-12 left-1/2 -translate-x-1/2
-              w-12 h-12
-              flex items-center justify-center
-              text-white/80 hover:text-white hover:bg-white/10
-              bg-black/20 backdrop-blur-sm
-              rounded-full
-              transition-all
-              cursor-pointer
-            "
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            aria-label="View Projects"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
-            </svg>
-          </motion.button>
+
         </section>
 
         {/* ===== PROJECTS SECTION ===== */}
@@ -157,7 +162,7 @@ export default function Home() {
             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 pb-6 min-h-0">
               {/* Project 1 */}
               <div className="group relative p-8 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-[#60a5fa]/30 hover:shadow-2xl hover:shadow-[#60a5fa]/20 hover:-translate-y-1 transition-all duration-300">
-                <a href="#" className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors" aria-label="GitHub Link">
+                <a href="https://github.com/ZaheerH-03/Adaptive-rag-system" className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors" aria-label="GitHub Link">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
                 </a>
                 <h3 className="font-[var(--font-space)] text-2xl font-medium mb-3 group-hover:text-[#60a5fa] transition-colors">Adaptive RAG System</h3>
@@ -171,10 +176,10 @@ export default function Home() {
 
               {/* Project 2 */}
               <div className="group relative p-8 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-[#60a5fa]/30 hover:shadow-2xl hover:shadow-[#60a5fa]/20 hover:-translate-y-1 transition-all duration-300">
-                <a href="#" className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors" aria-label="GitHub Link">
+                <a href="https://github.com/ZaheerH-03/ExplainableTrack" className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors" aria-label="GitHub Link">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
                 </a>
-                <h3 className="font-[var(--font-space)] text-2xl font-medium mb-3 group-hover:text-[#60a5fa] transition-colors">Object Detection Pipeline</h3>
+                <h3 className="font-[var(--font-space)] text-2xl font-medium mb-3 group-hover:text-[#60a5fa] transition-colors">Explainable-Track</h3>
                 <p className="text-white/60 leading-relaxed mb-6">Real-time object detection system integrated with tracking algorithms and Explainable AI (XAI) for transparent decision making.</p>
                 <div className="flex flex-wrap gap-2 text-xs font-mono text-[#60a5fa]/80">
                   <span className="px-2 py-1 rounded bg-[#60a5fa]/10">Computer Vision</span>
@@ -185,21 +190,21 @@ export default function Home() {
 
               {/* Project 3 */}
               <div className="group relative p-8 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-[#60a5fa]/30 hover:shadow-2xl hover:shadow-[#60a5fa]/20 hover:-translate-y-1 transition-all duration-300">
-                <a href="#" className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors" aria-label="GitHub Link">
+                <a href="https://github.com/ZaheerH-03/SRGAN" className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors" aria-label="GitHub Link">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
                 </a>
-                <h3 className="font-[var(--font-space)] text-2xl font-medium mb-3 group-hover:text-[#60a5fa] transition-colors">EEG Data Augmentation</h3>
-                <p className="text-white/60 leading-relaxed mb-6">Medical data synthesis framework using Conditional GANs (CGans) to augment EEG datasets for improved classification models.</p>
+                <h3 className="font-[var(--font-space)] text-2xl font-medium mb-3 group-hover:text-[#60a5fa] transition-colors">SuperRes GAN</h3>
+                <p className="text-white/60 leading-relaxed mb-6">Research-faithful PyTorch implementation of SRGAN for photo-realistic single-image super-resolution. Uses deep residual learning, sub-pixel convolution (PixelShuffle), VGG16-based perceptual loss, adversarial training, and SSIM/PSNR evaluation on DIV2K with stable convergence and qualitative validation.</p>
                 <div className="flex flex-wrap gap-2 text-xs font-mono text-[#60a5fa]/80">
                   <span className="px-2 py-1 rounded bg-[#60a5fa]/10">GANs</span>
-                  <span className="px-2 py-1 rounded bg-[#60a5fa]/10">Medical AI</span>
+                  <span className="px-2 py-1 rounded bg-[#60a5fa]/10">Super Resolution</span>
                   <span className="px-2 py-1 rounded bg-[#60a5fa]/10">PyTorch</span>
                 </div>
               </div>
 
               {/* Project 4 */}
               <div className="group relative p-8 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-[#60a5fa]/30 hover:shadow-2xl hover:shadow-[#60a5fa]/20 hover:-translate-y-1 transition-all duration-300">
-                <a href="#" className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors" aria-label="GitHub Link">
+                <a href="https://github.com/ZaheerH-03/fortunix" className="absolute top-8 right-8 text-white/40 hover:text-white transition-colors" aria-label="GitHub Link">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
                 </a>
                 <h3 className="font-[var(--font-space)] text-2xl font-medium mb-3 group-hover:text-[#60a5fa] transition-colors">Fortunix</h3>
