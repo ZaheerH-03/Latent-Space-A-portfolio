@@ -180,6 +180,8 @@ export default function Home() {
 
         {/* HERO SECTION */}
         <section className="h-screen w-full flex flex-col justify-center px-8 md:px-20 relative">
+          {/* Gradient shield behind text — prevents nebula from washing out copy on mobile */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0b0d10]/80 via-[#0b0d10]/40 to-transparent pointer-events-none" />
           <div className="max-w-4xl z-10">
             {view === 'hero' && (
               <motion.h1
@@ -213,7 +215,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="mt-6 text-white/50 text-sm md:text-base max-w-lg leading-relaxed"
+              className="mt-6 text-white/75 text-sm md:text-base max-w-lg leading-relaxed"
             >
               I design and build end-to-end AI systems — LangGraph agents, hybrid RAG pipelines,
               and computer vision research. Recent graduate, focused on ML engineering.
