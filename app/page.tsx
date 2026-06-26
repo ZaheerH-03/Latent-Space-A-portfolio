@@ -248,7 +248,7 @@ export default function Home() {
 
           {/* Scroll indicator */}
           <motion.div
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/25 cursor-pointer"
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 cursor-pointer"
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
             onClick={goToProjects}
