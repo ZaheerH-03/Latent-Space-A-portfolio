@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Inter, Space_Grotesk } from 'next/font/google'
 
@@ -13,11 +12,19 @@ const spaceGrotesk = Space_Grotesk({
   variable: '--font-space',
 })
 
-
-
 export const metadata: Metadata = {
   title: "Latent Space | Shaik Zaheer Hussain",
-  description: "Generative AI & Computer Vision Portfolio",
+  description: "AI & ML engineering portfolio — RAG systems, agentic AI, and computer vision.",
+  openGraph: {
+    title: "Latent Space | Shaik Zaheer Hussain",
+    description: "AI & ML engineering portfolio — RAG systems, agentic AI, and computer vision.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Latent Space | Shaik Zaheer Hussain",
+    description: "AI & ML engineering portfolio — RAG systems, agentic AI, and computer vision.",
+  },
 };
 
 export default function RootLayout({
@@ -27,9 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${spaceGrotesk.variable} `}
-      >
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         {children}
       </body>
     </html>
